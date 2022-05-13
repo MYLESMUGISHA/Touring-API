@@ -216,3 +216,9 @@ main {
   padding: 0.25rem 0.5rem;
   border-radius: var(--radius);
 }
+.showless{
+
+text-align: center;
+color:blue;
+font-size: 10px;
+}

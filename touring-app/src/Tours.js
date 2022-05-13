@@ -2,28 +2,28 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import Axios from 'axios';
 import './App.css';
-import App from './App';
+import Loading from './Loading';
 const toursApi = "https://course-api.com/react-tours-project"
 const Tours= ()=> {
-    const[user, setUsers] = useState([]);
-   const[loading, setLoading] = useState(true);
-//    const[error, setError] = useState(false)
+    const[tour, setTours] = useState([]);
+   const[loading, setLoading] = useState(true); 
+   const[readMore, setReadMore] = useState(false)
     useEffect(()=>{
 fetchTours()
 },[]);
 const fetchTours =()=>{
     Axios.get(toursApi).then((resp)=>{
         setLoading(false)
-        setUsers(resp.data)
+        setTours(resp.data)
 }
  )
 }
-console.log(user)
+
 const deleteBtn=(id)=>{
-let newTours = user.filter((tour)=>{
+let newTours = tour.filter((tour)=>{
     return tour.id !== id
 })
-setUsers(newTours)
+setTours(newTours)
 }
 const refreshBtn =()=>{
     fetchTours()
@@ -31,15 +31,15 @@ const refreshBtn =()=>{
 if (loading === true){
     return(
         <div>
-    <h1> Loading</h1>
+    <Loading></Loading>
         </div>
     )
 }
-if (user.length === 0){
+if (tour.length === 0){
     return(
         <div>
 <h2>You have any left tours ,refresh you page to resume</h2>
-<button className='refresh-btn' onClick={refreshBtn}>Refresh Tours</button>
+<button className='refresh-btn' onClick={()=> refreshBtn()}>Refresh Tours</button>
         </div>
     )
 }
@@ -50,17 +50,21 @@ if (user.length === 0){
 <div className='underline'>
 </div>
     </div>
-           {user.map((person)=>{
-               const{name,image,id,info,price} =person
+           {tour.map((place)=>{
+               const{name,image,id,info,price} =place
 return(
 <div className ='single-tour' key={id}>
     <img src={image} alt={name}/>
     <div className='tours-id'>
 <div className='tour-info'>
     <h4>{name}</h4>
+    
 <h4 className='tour-price'>{price}</h4>
 </div>
-<p>{info}</p>
+<p>{readMore ? info : `${info.substring(0,200)}`} </p>
+
+<button className='readMore' onClick={()=>setReadMore(!readMore )}>{readMore ? <p className='showLess'>show less</p>: <p className='showMore'>show More</p>}</button>
+
 <button className='delete-btn' onClick={()=>deleteBtn(id)}>Remove Tours</button>
     </div>
 </div>
