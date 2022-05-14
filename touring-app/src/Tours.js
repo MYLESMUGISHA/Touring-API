@@ -3,11 +3,12 @@ import { useEffect } from 'react';
 import Axios from 'axios';
 import './App.css';
 import Loading from './Loading';
+import InfoTour from './InfoTour';
 const toursApi = "https://course-api.com/react-tours-project"
 const Tours= ()=> {
     const[tour, setTours] = useState([]);
    const[loading, setLoading] = useState(true); 
-   const[readMore, setReadMore] = useState(false)
+   
     useEffect(()=>{
 fetchTours()
 },[]);
@@ -51,23 +52,10 @@ if (tour.length === 0){
 </div>
     </div>
            {tour.map((place)=>{
-               const{name,image,id,info,price} =place
-return(
-<div className ='single-tour' key={id}>
-    <img src={image} alt={name}/>
-    <div className='tours-id'>
-<div className='tour-info'>
-    <h4>{name}</h4>
     
-<h4 className='tour-price'>{price}</h4>
-</div>
-<p>{readMore ? info : `${info.substring(0,200)}`} </p>
+return(
+<InfoTour {...place} deleteBtn={deleteBtn} key ={place.id}/>
 
-<button className='readMore' onClick={()=>setReadMore(!readMore )}>{readMore ? <p className='showLess'>show less</p>: <p className='showMore'>show More</p>}</button>
-
-<button className='delete-btn' onClick={()=>deleteBtn(id)}>Remove Tours</button>
-    </div>
-</div>
 )
  })}
     </div>
