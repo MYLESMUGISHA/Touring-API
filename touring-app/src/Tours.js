@@ -39,8 +39,8 @@ if (loading === true){
 if (tour.length === 0){
     return(
         <div>
-<h2>You have any left tours ,refresh you page to resume</h2>
-<button className='refresh-btn' onClick={()=> refreshBtn()}>Refresh Tours</button>
+<h2 className='refresh'>You have any left tours ,refresh you page to resume</h2>
+<button className='btn' onClick={()=> refreshBtn()}>Refresh Tours</button>
         </div>
     )
 }
